@@ -17,6 +17,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 10800)  // 10800 = 3 horas
 @RestController  // Assume que todo método é um ResponseBody
 @RequestMapping(value = "/clientes")
 public class ClienteController {
@@ -53,6 +54,9 @@ public class ClienteController {
     @Transactional
     public ResponseEntity<ClienteDto> postCliente(@RequestBody ClienteForm form, UriComponentsBuilder uriBuilder){  // form é um DTO,
         Cliente cliente = form.converterCliente();  // converte o objeto tipo ClienteForm em um objeto tipo Cliente apenas com o que vai ser gravado no banco
+
+        System.out.println(cliente);
+
         clienteRepository.save(cliente);
 
         URI uri = uriBuilder.path("/clientes/{id}").buildAndExpand(cliente.getId()).toUri();

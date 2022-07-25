@@ -21,6 +21,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 10800)  // 10800 = 3 horas
 @RestController
 @RequestMapping(value = "/itensNotaFiscal")
 public class ItemNotaFiscalController {
@@ -33,6 +34,22 @@ public class ItemNotaFiscalController {
 
     @Autowired
     private ProdutoRepository produtoRepository;
+
+    @GetMapping
+    public List<ItemNotaFiscal> getItensNotasFiscais() {
+        List<ItemNotaFiscal> itensNotasFiscais = itemNotaFiscalRepository.findAll();
+
+        return itensNotasFiscais;
+    }
+
+    @GetMapping("/{id}")  // @PathVariable indica que o parametro vem na url
+    public List<ItemNotaFiscal> getItensNotaFiscal(@PathVariable Long id) {  // o parametro no GetMapping deve ter o mesmo do método (ex: sgetCliente(Long id))
+
+        List<ItemNotaFiscal> itensNotaFiscal = itemNotaFiscalRepository.findByNotaFiscalId(id);
+        return itensNotaFiscal;
+
+    }
+
 
     @PostMapping
     @Transactional

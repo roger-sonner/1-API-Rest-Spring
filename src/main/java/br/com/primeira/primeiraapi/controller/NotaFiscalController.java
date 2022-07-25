@@ -18,6 +18,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 10800)  // 10800 = 3 horas
 @RestController
 @RequestMapping(value = "/notasFiscais")
 public class NotaFiscalController {
